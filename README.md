@@ -14,20 +14,35 @@ Inspired by Nolan's *TENET*, it uses Unicode braille sub-pixel rendering (220×1
 
 ### Build & Run
 
-```bash
-# Build both the ASCII Engine & TENET Simulation using Makefile
-make
+**On Windows (PowerShell / CMD):**
+```powershell
+# Refresh environment PATH in active session if needed
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
-# Run the TENET Time-Inversion Playground
-./tenet.exe    # Or ./tenet on Linux/macOS
+# Build both targets using MinGW make
+mingw32-make
 
-# Run the ASCII Engine demo
-./tenascii.exe
+# Or compile directly with GCC
+gcc -Wall -O2 -Iinclude src/main.c src/tenascii.c -o tenascii.exe
+gcc -Wall -O2 src/tenet_sim.c -o tenet.exe -lm
+
+# Run TENET Time-Inversion Playground
+.\tenet.exe
+
+# Run ASCII Engine demo
+.\tenascii.exe
 ```
 
-*Or compile directly with GCC:*
+**On Linux / macOS:**
 ```bash
-gcc -O2 -o tenet.exe src/tenet_sim.c -lm
+# Build using Makefile
+make
+
+# Run TENET Time-Inversion Playground
+./tenet
+
+# Run ASCII Engine demo
+./tenascii
 ```
 
 ---

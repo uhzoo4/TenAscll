@@ -6,13 +6,20 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 
 include_directories(include)
 
-add_executable(tenascii src/main.c src/tenascii.c)
-add_executable(tenet src/tenet_sim.c)
+file(GLOB SOURCES 
+    "src/main.c"
+    "src/term.c"
+    "src/particle.c"
+    "src/algorithm.c"
+    "src/render.c"
+)
+
+add_executable(tenet ${SOURCES})
 
 if(UNIX)
     target_link_libraries(tenet m)
 endif()
 
-set_target_properties(tenascii tenet PROPERTIES
+set_target_properties(tenet PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )

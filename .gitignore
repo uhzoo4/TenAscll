@@ -1,4 +1,4 @@
-# Binaries and Executables
+# Compiled Binaries & Executables
 *.exe
 *.o
 *.obj
@@ -10,7 +10,8 @@
 bin/
 build/
 
-# IDE & Editor files
+# Editor & IDE Files
 .vscode/
 .idea/
 *.swp
+*.tmp

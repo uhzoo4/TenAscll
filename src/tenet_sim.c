@@ -1,4 +1,5 @@
 // TENET — time-inversion particle playground
+// Phase 3 — Paradox Consequences & Scripted Algorithm Pincer Movement
 // Blue = forward entropy, Red = inverted entropy (retracing its own past).
 // A forward/inverted collision is a real paradox now: both particles are
 // annihilated on contact, and the site burns down through a white-hot core
@@ -138,7 +139,7 @@ static void sleep_ms(int ms) {
 
 static unsigned char dotmask[ROWS][COLS]; // which subpixels are lit
 static unsigned char
-    colorbuf[ROWS][COLS]; // 0 none, 1 blue, 2 red, 3 white(collision)
+    colorbuf[ROWS][COLS]; // 0 none, 1 blue, 2 red, 3 white, 4 orange, 5 dim-ember
 
 static const int braille_bit[4][2] = {
     {0x01, 0x08}, {0x02, 0x10}, {0x04, 0x20}, {0x40, 0x80}};
@@ -173,10 +174,10 @@ static void fb_present(void) {
         switch (c) {
         case 1:
           n += sprintf(out + n, "\x1b[38;5;39m");
-          break; // blue
+          break; // blue (forward)
         case 2:
           n += sprintf(out + n, "\x1b[38;5;196m");
-          break; // red
+          break; // red (inverted)
         case 3:
           n += sprintf(out + n, "\x1b[38;5;231m");
           break; // white-hot core

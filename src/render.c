@@ -9,7 +9,7 @@
 //   7  white-hot ember core (fresh paradox)
 //   8  orange ember
 //   9  dim ember afterglow (fading out)
-#include "tenet.h"
+#include "../include/tenet.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>

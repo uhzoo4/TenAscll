@@ -1,7 +1,7 @@
 // Particle simulation: gravity, wall bounce, the turnstile auto-inversion,
 // and paradox annihilation. This file owns all the simulation state that
 // render.c only reads.
-#include "tenet.h"
+#include "../include/tenet.h"
 #include <math.h>
 #include <stdarg.h>
 #include <stdio.h>

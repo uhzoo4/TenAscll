@@ -1,4 +1,5 @@
 # TENET — Terminal Time-Inversion Playground
+
 ### Planning & Architecture Blueprint
 
 No execution until you say go. This is the full plan: theme, rendering method, data structures, phases, and stretch goals.
@@ -10,7 +11,7 @@ No execution until you say go. This is the full plan: theme, rendering method, d
 Straight from the film's actual internal logic, not a vague "reverse video" gimmick:
 
 | Concept in film | Concept in sim |
-|---|---|
+| --- | --- |
 | Entropy inversion (object moves backward through *its own* recorded life) | Each particle keeps a growing history buffer of every position it has occupied. "Inverting" it doesn't compute new reverse-physics — it just **replays the buffer backward, frame by frame** |
 | Blue = forward people, Red = inverted people | Blue particles simulated forward under gravity; Red particles in playback mode |
 | Turnstile (the machine that flips your entropy) | A region in space — a ring, a doorway, or the whole singularity — that flips a particle's state the instant it's crossed |
@@ -36,6 +37,7 @@ Plain ASCII gives 1 "pixel" per character cell — too chunky for smooth gravita
   (0,2)=0x04   (1,2)=0x20
   (0,3)=0x40   (1,3)=0x80
   ```
+
   where `(sub_x, sub_y)` is the dot's position inside its 2×4 cell.
 
 - **Two parallel buffers** per frame:
@@ -81,6 +83,7 @@ Scripted wave timing: wave A launches, crosses turnstile and inverts partway thr
 Right now a collision just flashes. Give it a mechanic: e.g., colliding particles could **swap velocities**, **annihilate**, or **freeze both permanently** — pick one rule and make it visually legible (a distinct color hold, not just a single-frame flash).
 
 **Phase 4 — Polish pass**
+
 - Velocity-based particle brightness/trail fade (older history points dimmer)
 - On-screen event log line ("Paradox at wave 3", "12 particles returned")
 - Optional: read terminal size dynamically (`ioctl TIOCGWINSZ`) instead of fixed `110×42`, so it fills whatever terminal you're in

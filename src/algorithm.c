@@ -2,7 +2,8 @@
 // launch until the turnstile has actually converted a chunk of squad A, so
 // the two squads are guaranteed to occupy the same space while moving in
 // opposite entropy directions -- a real pincer, not a lucky overlap.
-#include "tenet.h"
+#include "../include/tenet.h"
+
 #include <stddef.h>
 
 int algo_phase = 0;

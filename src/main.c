@@ -14,7 +14,7 @@
 //
 // Build:  make  /  cmake -B build && cmake --build build
 // Run:    ./tenet  (real terminal, >= 110x44, UTF-8 + truecolor)
-#include "tenet.h"
+#include "../include/tenet.h"
 
 int main(void) {
   term_raw();

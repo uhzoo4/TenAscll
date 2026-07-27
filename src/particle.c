@@ -11,7 +11,7 @@
 Particle P[MAX_PART];
 int flash_frames[ROWS][COLS];
 
-double CX, CY;
+double SING_X, SING_Y;
 double G = 1400.0;
 double TURNSTILE_R = 34.0;
 int turnstile_crossings = 0;
@@ -113,7 +113,7 @@ void physics_step(double dt) {
 
     if (p->state == 1) {
       // forward: gravity toward singularity + wall bounce
-      double dx0 = CX - p->x, dy0 = CY - p->y;
+      double dx0 = SING_X - p->x, dy0 = SING_Y - p->y;
       double dist_before = sqrt(dx0 * dx0 + dy0 * dy0);
 
       double r2 = dx0 * dx0 + dy0 * dy0 + 400.0;
@@ -142,7 +142,7 @@ void physics_step(double dt) {
       hist_push(p, p->x, p->y);
 
       // turnstile: crossing INTO the ring auto-inverts entropy
-      double dx1 = CX - p->x, dy1 = CY - p->y;
+      double dx1 = SING_X - p->x, dy1 = SING_Y - p->y;
       double dist_after = sqrt(dx1 * dx1 + dy1 * dy1);
       if (dist_before > TURNSTILE_R && dist_after <= TURNSTILE_R &&
           p->hlen > 1) {

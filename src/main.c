@@ -1,6 +1,8 @@
 // TENET -- time-inversion particle playground. See tenet.h for the module
 // layout: term.c (terminal), particle.c (physics/state), algorithm.c
 // (scripted pincer), render.c (drawing). This file just wires them together.
+// Portable C11 -- no platform-specific includes or calls anywhere below;
+// term.c is the only file that touches POSIX or Windows APIs directly.
 //
 // Controls:
 //   SPACE  launch a forward wave from the left
@@ -10,25 +12,22 @@
 //   r      reset everything
 //   q      quit
 //
-// Build:  make            (or: gcc -O2 -o tenet *.c -lm)
-// Run:    ./tenet          (real terminal, >= 110x44, UTF-8 + truecolor)
+// Build:  make  /  cmake -B build && cmake --build build
+// Run:    ./tenet  (real terminal, >= 110x44, UTF-8 + truecolor)
 #include "tenet.h"
-#include <time.h>
-#include <unistd.h>
 
 int main(void) {
   term_raw();
-  CX = SUBW / 2.0;
-  CY = SUBH / 2.0;
+  SING_X = SUBW / 2.0;
+  SING_Y = SUBH / 2.0;
   reset_sim();
   spawn_wave(0);
 
-  struct timespec ts = {0, 33 * 1000000L}; // ~30fps
   const char *msg = "temporal pincer movement ready";
   int running = 1;
   while (running) {
     char c;
-    while (read(STDIN_FILENO, &c, 1) == 1) {
+    while (get_char_nonblock(&c)) {
       if (c == 'q')
         running = 0;
       else if (c == ' ') {
@@ -68,7 +67,7 @@ int main(void) {
     }
     draw(fc, ic, rc, msg);
 
-    nanosleep(&ts, NULL);
+    sleep_ms(33); // ~30fps
   }
   return 0;
 }

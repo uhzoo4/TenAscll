@@ -14,6 +14,14 @@
 #include <stdio.h>
 #include <string.h>
 
+// M_PI is a POSIX/BSD extension to math.h, not standard C. MinGW's math.h
+// only exposes it in GNU-extension mode; building with a strict standard
+// flag (-std=c11 rather than -std=gnu11) hides it, so we can't rely on it
+// being defined -- provide a fallback instead of requiring a specific flag.
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 static unsigned char dotmask[ROWS][COLS];
 static unsigned char colorbuf[ROWS][COLS];
 
@@ -96,7 +104,7 @@ void draw_turnstile(void) {
   int steps = 90;
   for (int s = 0; s < steps; s++) {
     double a = 2.0 * M_PI * s / steps;
-    fb_plot(CX + TURNSTILE_R * cos(a), CY + TURNSTILE_R * sin(a), 0);
+    fb_plot(SING_X + TURNSTILE_R * cos(a), SING_Y + TURNSTILE_R * sin(a), 0);
   }
 }
 

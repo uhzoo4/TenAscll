@@ -33,11 +33,11 @@ void log_event(const char *fmt, ...) {
     log_count++;
 }
 
-void hist_push(Particle *p, double x, double y) {
+static void hist_push(Particle *p, double x, double y) {
   if (p->hlen >= p->hcap) {
     p->hcap = p->hcap ? p->hcap * 2 : 64;
-    p->hx = realloc(p->hx, sizeof(double) * p->hcap);
-    p->hy = realloc(p->hy, sizeof(double) * p->hcap);
+    p->hx = realloc(p->hx, sizeof(double) * (size_t)p->hcap);
+    p->hy = realloc(p->hy, sizeof(double) * (size_t)p->hcap);
   }
   p->hx[p->hlen] = x;
   p->hy[p->hlen] = y;

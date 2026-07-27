@@ -28,23 +28,23 @@ static unsigned char colorbuf[ROWS][COLS];
 static const int braille_bit[4][2] = {
     {0x01, 0x08}, {0x02, 0x10}, {0x04, 0x20}, {0x40, 0x80}};
 
-void fb_clear(void) {
+static void fb_clear(void) {
   memset(dotmask, 0, sizeof(dotmask));
   memset(colorbuf, 0, sizeof(colorbuf));
 }
 
-void fb_plot(double fx, double fy, int color) {
+static void fb_plot(double fx, double fy, int color) {
   int x = (int)fx, y = (int)fy;
   if (x < 0 || x >= SUBW || y < 0 || y >= SUBH)
     return;
   int cx = x / 2, cy = y / 4;
   int sx = x % 2, sy = y % 4;
-  dotmask[cy][cx] |= braille_bit[sy][sx];
+  dotmask[cy][cx] |= (unsigned char)braille_bit[sy][sx];
   if (color > colorbuf[cy][cx])
-    colorbuf[cy][cx] = color;
+    colorbuf[cy][cx] = (unsigned char)color;
 }
 
-void fb_present(void) {
+static void fb_present(void) {
   static char out[(ROWS) * (COLS * 24 + 16)];
   int n = 0;
   n += sprintf(out + n, "\x1b[H");
@@ -96,11 +96,11 @@ void fb_present(void) {
     out[n++] = '\r';
     out[n++] = '\n';
   }
-  fwrite(out, 1, n, stdout);
+  fwrite(out, 1, (size_t)n, stdout);
   fflush(stdout);
 }
 
-void draw_turnstile(void) {
+static void draw_turnstile(void) {
   int steps = 90;
   for (int s = 0; s < steps; s++) {
     double a = 2.0 * M_PI * s / steps;
@@ -113,7 +113,7 @@ void draw_turnstile(void) {
 // Forward particles trail toward lower history indices (their past);
 // inverted particles trail toward higher indices (the part of their life
 // they already rewound through).
-static void plot_trail(Particle *p) {
+static void plot_trail(const Particle *p) {
   int base, dir, near_tier, far_tier;
   if (p->state == 1) {
     base = p->hlen - 1;

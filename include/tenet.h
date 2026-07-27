@@ -56,7 +56,6 @@ void sleep_ms(int ms);
 
 // ---- particle.c ----
 void log_event(const char *fmt, ...);
-void hist_push(Particle *p, double x, double y);
 void spawn_wave(int from_right);
 void invert_all_forward(void);
 void reset_sim(void);
@@ -67,10 +66,8 @@ void algo_start(void);
 const char *algo_tick(void);
 
 // ---- render.c ----
-void fb_clear(void);
-void fb_plot(double fx, double fy, int color);
-void fb_present(void);
-void draw_turnstile(void);
+// fb_clear/fb_plot/fb_present/draw_turnstile are internal to render.c
+// (static) -- draw() is the only entry point other files need.
 void draw(int forward_count, int inverted_count, int returned_count,
           const char *msg);
 

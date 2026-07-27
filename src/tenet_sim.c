@@ -38,11 +38,18 @@
 // Build:  gcc -O2 -o tenet tenet_sim.c -lm
 // Run:    ./tenet   (use a real terminal, at least 100x40, UTF-8 + truecolor)
 
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 #ifdef _WIN32
 #include <windows.h>

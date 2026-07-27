@@ -51,6 +51,7 @@
 #define M_PI 3.14159265358979323846
 #endif
 
+// ---------- cross-platform terminal & timing ----------
 #ifdef _WIN32
 #include <windows.h>
 #include <conio.h>

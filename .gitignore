@@ -1,17 +1,20 @@
-# Compiled Binaries & Executables
-*.exe
+# build artifacts
 *.o
 *.obj
-*.a
-*.lib
-*.dll
+*.exe
+tenet
+tenascii
 
-# Build Directories
-bin/
+# CMake
 build/
+out/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+CMakeUserPresets.json
 
-# Editor & IDE Files
+# editor
 .vscode/
-.idea/
-*.swp
-*.tmp
+*.suo
+*.user

@@ -1,23 +1,10 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -O2 -std=c99 -Iinclude
-SRC = src/main.c src/term.c src/particle.c src/algorithm.c src/render.c
-OBJ = $(SRC:.c=.o)
-TARGET = tenet.exe
+CC      = gcc
+CFLAGS  = -O2 -Wall -Iinclude
+SRCS    = src/term.c src/particle.c src/algorithm.c src/render.c src/main.c
+BIN     = tenet
 
-all: $(TARGET)
-
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^ -lm
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(BIN): $(SRCS) include/tenet.h
+	$(CC) $(CFLAGS) -o $(BIN) $(SRCS) -lm
 
 clean:
-# Cross-platform clean rule
-ifeq ($(OS),Windows_NT)
-	-cmd /c del /f /q src\*.o *.exe 2>NUL
-else
-	-rm -f src/*.o *.exe
-endif
-
-.PHONY: all clean
+	rm -f $(BIN) $(BIN).exe *.o

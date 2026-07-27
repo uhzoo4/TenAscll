@@ -1,67 +1,54 @@
-# TENASCII & TENET ⏳
+# TENASCII — TENET-style time-inversion particle playground
 
-A high-density terminal particle playground built in C using modular architecture.
+A terminal particle sim built around the actual film mechanic: particles
+crossing a "turnstile" auto-invert and rewind their own recorded history,
+and forward/inverted collisions are real paradox events (annihilation +
+a fading scorch mark). Rendered in braille sub-pixels for higher-than-ASCII
+resolution. Full design notes in `BLUEPRINT.md`.
 
-Inspired by Nolan's *TENET*, it uses Unicode braille sub-pixel rendering (220×168 effective resolution in a 110×42 terminal) to simulate **temporal pincer movements**, **spatial turnstile entropy inversion**, and **matter-antimatter paradox collisions**.
+## Layout
 
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Any standard C compiler (`gcc`, `clang`, or MinGW)
-- Terminal supporting UTF-8 and ANSI colors (Windows Terminal, PowerShell, or Linux/macOS terminal)
-
-### Build & Run
-
-**On Windows (PowerShell / CMD):**
-```powershell
-# Refresh environment PATH in active session if needed
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-
-# Build executable using MinGW make
-mingw32-make
-
-# Run the TENET Interactive Simulation!
-.\tenet.exe
+```
+include/
+  tenet.h        shared constants, Particle struct, all extern declarations
+src/
+  term.c         raw terminal mode (alt screen, non-blocking input)
+  particle.c     physics, turnstile, annihilation, event log
+  algorithm.c    the scripted two-squad pincer ("THE ALGORITHM")
+  render.c       braille framebuffer, trail fade, turnstile ring, HUD
+  main.c         entry point / input loop only
 ```
 
-**On Linux / macOS:**
-```bash
+## Build
+
+CMake:
+
+```
+cmake -B build
+cmake --build build
+./build/tenet        (or build\Debug\tenet.exe on Windows/MSVC generators)
+```
+
+Make:
+
+```
 make
 ./tenet
 ```
 
----
+## Windows note
 
-## 🎮 Controls (`tenet`)
+Run `chcp 65001` in your terminal before launching, or use Windows Terminal —
+the braille rendering is UTF-8 and needs the console codepage to match.
+`term.c` also sets this automatically on Windows builds.
 
-| Key | Action | Description |
-|:---:|:---|:---|
-| `SPACE` | **Forward Wave** | Spawns forward entropy particles (Blue) advancing under gravity |
-| `p` | **Pincer Squad** | Launches a forward squad from the opposite direction |
-| `a` | **The Algorithm** | Scripted temporal pincer choreography (Squad A → Turnstile → Squad B) |
-| `i` | **Force Invert** | Instantly rewinds all active particles |
-| `r` | **Reset** | Clears the simulation field |
-| `q` | **Quit** | Exits the simulation |
+## Controls
 
----
-
-## 🛠️ Modular Project Structure
-
-```
-TENASCII/
-├── CMakeLists.txt     # Modular CMake configuration
-├── Makefile           # GCC build script for modular sources
-├── .gitignore         # Build exclusions
-├── README.md          # Project documentation
-├── BLUEPRINT.md       # Architecture spec & mechanics blueprint
-├── include/
-│   └── tenet.h        # Unified header with structs & module prototypes
-└── src/
-    ├── main.c         # Application entry point & game loop
-    ├── term.c         # Cross-platform raw terminal & non-blocking I/O
-    ├── particle.c     # Particle physics, turnstile inversion & paradox logic
-    ├── algorithm.c    # Scripted temporal pincer choreography
-    └── render.c       # Unicode Braille 2x4 sub-pixel render engine
-```
+| Key   | Action |
+|-------|--------|
+| space | launch a forward wave from the left |
+| p     | launch an unscripted pincer wave from the right |
+| a     | run THE ALGORITHM (scripted, timed pincer) |
+| i     | manual override — force-invert all forward particles |
+| r     | reset |
+| q     | quit |

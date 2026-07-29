@@ -16,9 +16,13 @@
 
 <body>
 
+  <!-- ambient particle field, persists behind the whole page -->
+  <canvas id="particle-field" aria-hidden="true"></canvas>
+
   <!-- ============================== HERO ============================== -->
   <section class="hero" id="hero">
     <div class="hero-bg-grid" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
 
     <div class="hero-topbar">
       <span class="dot dot-forward"></span>
@@ -30,6 +34,7 @@
     <div class="hero-main">
       <div class="hero-text">
         <h1 class="hero-title" id="hero-title">TENET</h1>
+        <span class="hero-rule" aria-hidden="true"></span>
         <p class="hero-tag">
           Crossing the ring doesn't reverse the animation. It reverses the
           <em>particle</em> — it starts replaying its own recorded past,
@@ -43,12 +48,15 @@
 
       <div class="hero-ring-wrap">
         <svg class="hero-ring" viewBox="0 0 400 400" aria-hidden="true">
-          <!-- invisible reference path the dot travels along -->
+          <!-- invisible reference paths the two particles travel along --
+               squad A (forward, left origin) crosses in; squad B
+               (already-inverted, right origin) is retracing outward, so
+               the hero previews the turnstile AND the pincer at once -->
           <path id="motion-track" d="M 40 200 C 40 80, 360 80, 360 200" fill="none" opacity="0" />
-          <!-- the turnstile ring itself, drawn on load -->
+          <path id="motion-track-b" d="M 360 220 C 360 320, 40 320, 40 220" fill="none" opacity="0" />
           <circle id="turnstile-ring" cx="200" cy="200" r="120" fill="none" stroke="var(--grid)" stroke-width="1.5" />
-          <!-- the traveling particle -->
           <circle id="hero-dot" cx="40" cy="200" r="7" fill="var(--forward)" />
+          <circle id="hero-dot-b" cx="360" cy="220" r="7" fill="var(--inverted)" />
         </svg>
         <div class="hero-ring-caption mono">TURNSTILE_R = 34.0</div>
       </div>
@@ -71,51 +79,60 @@
       </p>
     </div>
 
-    <div class="concept-grid">
+    <div class="concept-rows">
 
-      <article class="concept-card" data-reveal>
-        <svg class="concept-diagram" viewBox="0 0 160 100" aria-hidden="true">
-          <circle cx="80" cy="50" r="34" fill="none" stroke="var(--grid)" stroke-width="1.5" />
-          <circle class="cd-dot cd-turnstile-dot" cx="10" cy="50" r="5" fill="var(--forward)" />
+      <article class="concept-row" data-reveal>
+        <span class="concept-ghost-num mono" aria-hidden="true">01</span>
+        <svg class="concept-diagram" viewBox="0 0 320 220" aria-hidden="true">
+          <circle cx="160" cy="110" r="72" fill="none" stroke="var(--grid)" stroke-width="1.5" />
+          <circle class="cd-dot cd-turnstile-dot" cx="24" cy="110" r="8" fill="var(--forward)" />
         </svg>
-        <h3 class="mono">01 — TURNSTILE</h3>
-        <p>
-          A ring drawn around a central singularity. Any forward particle
-          that crosses <em>into</em> it is auto-inverted on the spot — no
-          keypress, no trigger, just geometry. It flips color and starts
-          rewinding the exact path it just walked.
-        </p>
+        <div class="concept-copy">
+          <h3 class="mono">TURNSTILE</h3>
+          <p>
+            A ring drawn around a central singularity. Any forward particle
+            that crosses <em>into</em> it is auto-inverted on the spot — no
+            keypress, no trigger, just geometry. It flips color and starts
+            rewinding the exact path it just walked.
+          </p>
+        </div>
       </article>
 
-      <article class="concept-card" data-reveal>
-        <svg class="concept-diagram" viewBox="0 0 160 100" aria-hidden="true">
-          <circle class="cd-dot cd-pincer-a" cx="10" cy="35" r="5" fill="var(--forward)" />
-          <circle class="cd-dot cd-pincer-b" cx="150" cy="65" r="5" fill="var(--forward)" />
-          <line x1="20" y1="50" x2="140" y2="50" stroke="var(--grid)" stroke-width="1" stroke-dasharray="3 4" />
+      <article class="concept-row concept-row-reverse" data-reveal>
+        <span class="concept-ghost-num mono" aria-hidden="true">02</span>
+        <svg class="concept-diagram" viewBox="0 0 320 220" aria-hidden="true">
+          <circle class="cd-dot cd-pincer-a" cx="20" cy="80" r="8" fill="var(--forward)" />
+          <circle class="cd-dot cd-pincer-b" cx="300" cy="140" r="8" fill="var(--forward)" />
+          <line x1="45" y1="110" x2="275" y2="110" stroke="var(--grid)" stroke-width="1" stroke-dasharray="4 6" />
         </svg>
-        <h3 class="mono">02 — THE ALGORITHM</h3>
-        <p>
-          Squad A launches, waits until the turnstile has actually converted
-          fifteen of its particles, <em>then</em> squad B launches — timed so
-          the two squads are guaranteed to occupy the same space while
-          moving in opposite entropy directions. A real pincer, not two
-          waves that happen to overlap.
-        </p>
+        <div class="concept-copy">
+          <h3 class="mono">THE ALGORITHM</h3>
+          <p>
+            Squad A launches, waits until the turnstile has actually converted
+            fifteen of its particles, <em>then</em> squad B launches — timed so
+            the two squads are guaranteed to occupy the same space while
+            moving in opposite entropy directions. A real pincer, not two
+            waves that happen to overlap.
+          </p>
+        </div>
       </article>
 
-      <article class="concept-card" data-reveal>
-        <svg class="concept-diagram" viewBox="0 0 160 100" aria-hidden="true">
-          <circle class="cd-dot cd-para-a" cx="60" cy="50" r="5" fill="var(--forward)" />
-          <circle class="cd-dot cd-para-b" cx="100" cy="50" r="5" fill="var(--inverted)" />
-          <circle class="cd-burst" cx="80" cy="50" r="2" fill="var(--ember)" opacity="0" />
+      <article class="concept-row" data-reveal>
+        <span class="concept-ghost-num mono" aria-hidden="true">03</span>
+        <svg class="concept-diagram" viewBox="0 0 320 220" aria-hidden="true">
+          <circle class="cd-dot cd-para-a" cx="120" cy="110" r="8" fill="var(--forward)" />
+          <circle class="cd-dot cd-para-b" cx="200" cy="110" r="8" fill="var(--inverted)" />
+          <circle class="cd-burst" cx="160" cy="110" r="3" fill="var(--ember)" opacity="0" />
         </svg>
-        <h3 class="mono">03 — PARADOX</h3>
-        <p>
-          Forward matter meeting its own inverted matter isn't survivable.
-          Both particles are deleted on contact, and the impact site
-          smoulders — white-hot core, then orange, then a fading ember —
-          for about 1.4 seconds. A paradox has a cost, visibly.
-        </p>
+        <div class="concept-copy">
+          <h3 class="mono">PARADOX</h3>
+          <p>
+            Forward matter meeting its own inverted matter isn't survivable.
+            Both particles are deleted on contact, and the impact site
+            smoulders — white-hot core, then orange, then a fading ember —
+            for about 1.4 seconds. A paradox has a cost, visibly.
+          </p>
+        </div>
       </article>
 
     </div>
@@ -132,16 +149,19 @@
       </p>
     </div>
 
-    <div class="terminal-window" data-reveal>
-      <div class="terminal-chrome">
-        <span class="chrome-dot chrome-red"></span>
-        <span class="chrome-dot chrome-yellow"></span>
-        <span class="chrome-dot chrome-green"></span>
-        <span class="chrome-title mono">img2art — photo.jpg 120</span>
-      </div>
-      <div class="terminal-body">
-        <img src="/img2art-preview.png"
-          alt="A photo converted to braille terminal art with real color, showing a mountain silhouette, a sun, and a gradient sky rendered entirely in dithered braille dots" />
+    <div class="terminal-window-wrap" data-reveal>
+      <div class="terminal-glow" aria-hidden="true"></div>
+      <div class="terminal-window">
+        <div class="terminal-chrome">
+          <span class="chrome-dot chrome-red"></span>
+          <span class="chrome-dot chrome-yellow"></span>
+          <span class="chrome-dot chrome-green"></span>
+          <span class="chrome-title mono">img2art — photo.jpg 120</span>
+        </div>
+        <div class="terminal-body">
+          <img src="/img2art-preview.png"
+            alt="A photo converted to braille terminal art with real color, showing a mountain silhouette, a sun, and a gradient sky rendered entirely in dithered braille dots" />
+        </div>
       </div>
     </div>
 
@@ -223,10 +243,7 @@
       <span class="dim">$</span> ./build/tenet
     </div>
     <div class="footer-links">
-      <a href="#" class="footer-repo-link">
-        <github class="com">
-          <unzoo4>/TENASCII
-      </a>
+      <a href="#" class="footer-repo-link">github.com/your-username/TENASCII</a>
       <span class="dim">·</span>
       <span class="dim">built in C11, no dependencies but stb_image</span>
     </div>

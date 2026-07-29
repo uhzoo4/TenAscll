@@ -3,6 +3,7 @@
 *.obj
 *.exe
 tenet
+img2art
 tenascii
 
 # CMake

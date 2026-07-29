@@ -1,54 +1,58 @@
-# TENASCII — TENET-style time-inversion particle playground
+# TENASCII site
 
-A terminal particle sim built around the actual film mechanic: particles
-crossing a "turnstile" auto-invert and rewind their own recorded history,
-and forward/inverted collisions are real paradox events (annihilation +
-a fading scorch mark). Rendered in braille sub-pixels for higher-than-ASCII
-resolution. Full design notes in `BLUEPRINT.md`.
+A scroll-driven showcase page for the TENASCII/TENET project, built with
+[Vite](https://vite.dev) and real [anime.js v4](https://animejs.com) effects
+(`splitText`, `svg.createDrawable`, `svg.createMotionPath`, `onScroll`,
+`createTimeline`).
 
-## Layout
+## Where each file goes
 
-```
-include/
-  tenet.h        shared constants, Particle struct, all extern declarations
-src/
-  term.c         raw terminal mode (alt screen, non-blocking input)
-  particle.c     physics, turnstile, annihilation, event log
-  algorithm.c    the scripted two-squad pincer ("THE ALGORITHM")
-  render.c       braille framebuffer, trail fade, turnstile ring, HUD
-  main.c         entry point / input loop only
-```
-
-## Build
-
-CMake:
+Make a new folder (call it whatever you want, e.g. `tenascii-site`) and put
+the files exactly like this — the paths matter, Vite expects this layout:
 
 ```
-cmake -B build
-cmake --build build
-./build/tenet        (or build\Debug\tenet.exe on Windows/MSVC generators)
+tenascii-site/            <- the folder you create
+├── package.json          <- from the chat, goes at the root
+├── index.html             <- from the chat, goes at the root
+├── public/
+│   └── img2art-preview.png   <- the screenshot used in the "showcase" section
+└── src/
+    ├── main.js            <- all the animation code
+    └── style.css          <- all the styling / color tokens
 ```
 
-Make:
+`public/` and `src/` are plain folders you create yourself — nothing special
+about them except the names, which Vite looks for by convention. If a file
+lands in the wrong spot (e.g. `main.js` at the root instead of inside `src/`)
+the `<script type="module" src="/src/main.js">` tag in `index.html` won't
+find it and the page will load with no animations.
+
+## Run it
+
+From inside that folder:
 
 ```
-make
-./tenet
+npm install
+npm run dev
 ```
 
-## Windows note
+That prints a local URL (usually `http://localhost:5173`) — open it in a
+browser. `npm install` reads `package.json` and pulls in Vite and anime.js
+automatically; you don't need to install anime.js separately.
 
-Run `chcp 65001` in your terminal before launching, or use Windows Terminal —
-the braille rendering is UTF-8 and needs the console codepage to match.
-`term.c` also sets this automatically on Windows builds.
+To produce a deployable static build:
 
-## Controls
+```
+npm run build
+```
 
-| Key   | Action |
-|-------|--------|
-| space | launch a forward wave from the left |
-| p     | launch an unscripted pincer wave from the right |
-| a     | run THE ALGORITHM (scripted, timed pincer) |
-| i     | manual override — force-invert all forward particles |
-| r     | reset |
-| q     | quit |
+Output lands in `dist/` — that folder is what you'd upload to any static
+host (Netlify, Vercel, GitHub Pages, etc.). `npm run preview` serves that
+build locally if you want to check it before deploying.
+
+## Before you deploy
+
+- `index.html` has a placeholder repo link (`href="#"` in the footer) —
+  point it at your actual GitHub URL.
+- Color tokens are the `:root` block at the top of `src/style.css` if you
+  want to retune anything.

@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TENASCII — a time-inversion particle sim</title>
+  <meta name="description"
+    content="A terminal particle sim built around the real TENET mechanic: cross the turnstile, invert your entropy, meet yourself, and neither of you continues." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- ============================== HERO ============================== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-grid" aria-hidden="true"></div>
+
+    <div class="hero-topbar">
+      <span class="dot dot-forward"></span>
+      <span>TENASCII</span>
+      <span class="hero-topbar-sep">/</span>
+      <span class="dim">a terminal entropy-inversion sim</span>
+    </div>
+
+    <div class="hero-main">
+      <div class="hero-text">
+        <h1 class="hero-title" id="hero-title">TENET</h1>
+        <p class="hero-tag">
+          Crossing the ring doesn't reverse the animation. It reverses the
+          <em>particle</em> — it starts replaying its own recorded past,
+          frame by frame, until it arrives back where it began.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#showcase">See it run</a>
+          <a class="btn btn-ghost" href="#architecture">Read the code map</a>
+        </div>
+      </div>
+
+      <div class="hero-ring-wrap">
+        <svg class="hero-ring" viewBox="0 0 400 400" aria-hidden="true">
+          <!-- invisible reference path the dot travels along -->
+          <path id="motion-track" d="M 40 200 C 40 80, 360 80, 360 200" fill="none" opacity="0" />
+          <!-- the turnstile ring itself, drawn on load -->
+          <circle id="turnstile-ring" cx="200" cy="200" r="120" fill="none" stroke="var(--grid)" stroke-width="1.5" />
+          <!-- the traveling particle -->
+          <circle id="hero-dot" cx="40" cy="200" r="7" fill="var(--forward)" />
+        </svg>
+        <div class="hero-ring-caption mono">TURNSTILE_R = 34.0</div>
+      </div>
+    </div>
+
+    <a class="scroll-cue" href="#concept" aria-label="Scroll to learn the mechanics">
+      <span>scroll</span>
+      <span class="scroll-cue-line"></span>
+    </a>
+  </section>
+
+  <!-- ============================= CONCEPT ============================= -->
+  <section class="concept" id="concept">
+    <div class="section-head">
+      <span class="eyebrow mono">THREE MECHANICS</span>
+      <h2>Not a metaphor. The actual mechanism.</h2>
+      <p class="section-sub">
+        Every visual idea in this project maps to one real line of physics code.
+        Nothing here is decorative.
+      </p>
+    </div>
+
+    <div class="concept-grid">
+
+      <article class="concept-card" data-reveal>
+        <svg class="concept-diagram" viewBox="0 0 160 100" aria-hidden="true">
+          <circle cx="80" cy="50" r="34" fill="none" stroke="var(--grid)" stroke-width="1.5" />
+          <circle class="cd-dot cd-turnstile-dot" cx="10" cy="50" r="5" fill="var(--forward)" />
+        </svg>
+        <h3 class="mono">01 — TURNSTILE</h3>
+        <p>
+          A ring drawn around a central singularity. Any forward particle
+          that crosses <em>into</em> it is auto-inverted on the spot — no
+          keypress, no trigger, just geometry. It flips color and starts
+          rewinding the exact path it just walked.
+        </p>
+      </article>
+
+      <article class="concept-card" data-reveal>
+        <svg class="concept-diagram" viewBox="0 0 160 100" aria-hidden="true">
+          <circle class="cd-dot cd-pincer-a" cx="10" cy="35" r="5" fill="var(--forward)" />
+          <circle class="cd-dot cd-pincer-b" cx="150" cy="65" r="5" fill="var(--forward)" />
+          <line x1="20" y1="50" x2="140" y2="50" stroke="var(--grid)" stroke-width="1" stroke-dasharray="3 4" />
+        </svg>
+        <h3 class="mono">02 — THE ALGORITHM</h3>
+        <p>
+          Squad A launches, waits until the turnstile has actually converted
+          fifteen of its particles, <em>then</em> squad B launches — timed so
+          the two squads are guaranteed to occupy the same space while
+          moving in opposite entropy directions. A real pincer, not two
+          waves that happen to overlap.
+        </p>
+      </article>
+
+      <article class="concept-card" data-reveal>
+        <svg class="concept-diagram" viewBox="0 0 160 100" aria-hidden="true">
+          <circle class="cd-dot cd-para-a" cx="60" cy="50" r="5" fill="var(--forward)" />
+          <circle class="cd-dot cd-para-b" cx="100" cy="50" r="5" fill="var(--inverted)" />
+          <circle class="cd-burst" cx="80" cy="50" r="2" fill="var(--ember)" opacity="0" />
+        </svg>
+        <h3 class="mono">03 — PARADOX</h3>
+        <p>
+          Forward matter meeting its own inverted matter isn't survivable.
+          Both particles are deleted on contact, and the impact site
+          smoulders — white-hot core, then orange, then a fading ember —
+          for about 1.4 seconds. A paradox has a cost, visibly.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============================= SHOWCASE ============================= -->
+  <section class="showcase" id="showcase">
+    <div class="section-head">
+      <span class="eyebrow mono">RENDERED, NOT DESCRIBED</span>
+      <h2>Every dot is a real sub-pixel.</h2>
+      <p class="section-sub">
+        Braille Unicode packs eight independent dots into one character cell —
+        a 4x resolution multiplier over plain ASCII, for free.
+      </p>
+    </div>
+
+    <div class="terminal-window" data-reveal>
+      <div class="terminal-chrome">
+        <span class="chrome-dot chrome-red"></span>
+        <span class="chrome-dot chrome-yellow"></span>
+        <span class="chrome-dot chrome-green"></span>
+        <span class="chrome-title mono">img2art — photo.jpg 120</span>
+      </div>
+      <div class="terminal-body">
+        <img src="/img2art-preview.png"
+          alt="A photo converted to braille terminal art with real color, showing a mountain silhouette, a sun, and a gradient sky rendered entirely in dithered braille dots" />
+      </div>
+    </div>
+
+    <div class="hud-strip mono" data-reveal>
+      <span class="hud-forward">F:12 </span>
+      <span class="hud-inverted">I:8 </span>
+      <span class="hud-returned">R:41 </span>
+      <span class="hud-grid">TS:63 </span>
+      <span class="hud-ember">PX:9 </span>
+      <span class="hud-phase">[pincer live]</span>
+      <span class="hud-msg"> ALGORITHM: squad B launched -- forward meets inverted</span>
+    </div>
+  </section>
+
+  <!-- ============================ ARCHITECTURE =========================== -->
+  <section class="architecture" id="architecture">
+    <div class="section-head">
+      <span class="eyebrow mono">HOW IT WAS BUILT</span>
+      <h2>Four phases, in the order they actually happened.</h2>
+    </div>
+
+    <ol class="phase-list">
+      <li class="phase-item" data-reveal>
+        <span class="phase-num mono">01</span>
+        <div>
+          <h3>The turnstile</h3>
+          <p>Replaced a manual invert-all keybind with a real spatial trigger: a ring around the singularity that
+            auto-inverts anything crossing into it.</p>
+        </div>
+      </li>
+      <li class="phase-item" data-reveal>
+        <span class="phase-num mono">02</span>
+        <div>
+          <h3>The Algorithm</h3>
+          <p>Scripted the two-squad pincer so the second wave launches only once the turnstile has actually converted
+            enough of the first — guaranteed convergence, not luck.</p>
+        </div>
+      </li>
+      <li class="phase-item" data-reveal>
+        <span class="phase-num mono">03</span>
+        <div>
+          <h3>Paradox consequences</h3>
+          <p>Forward/inverted collisions now annihilate both particles and burn down through white, orange, and ember
+            instead of a single flash frame.</p>
+        </div>
+      </li>
+      <li class="phase-item" data-reveal>
+        <span class="phase-num mono">04</span>
+        <div>
+          <h3>Trails, logs, and a real file structure</h3>
+          <p>Split one growing file into five focused modules, added history-fade trails and a live event log, and made
+            the whole thing portable to a second platform.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="module-map" data-reveal>
+      <div class="module-map-head mono">src/</div>
+      <div class="module-row"><span class="mono module-name">term.c</span><span class="module-desc">raw terminal mode —
+          POSIX and Windows backends behind one interface</span></div>
+      <div class="module-row"><span class="mono module-name">particle.c</span><span class="module-desc">physics, the
+          turnstile trigger, annihilation, the event log</span></div>
+      <div class="module-row"><span class="mono module-name">algorithm.c</span><span class="module-desc">the scripted
+          two-squad pincer choreography</span></div>
+      <div class="module-row"><span class="mono module-name">render.c</span><span class="module-desc">the braille
+          framebuffer, trail fade, HUD</span></div>
+      <div class="module-row"><span class="mono module-name">main.c</span><span class="module-desc">entry point and
+          input loop only — fully portable, zero platform code</span></div>
+      <div class="module-row"><span class="mono module-name">img2art.c</span><span class="module-desc">standalone image
+          -&gt; braille-art converter, real 24-bit color</span></div>
+    </div>
+  </section>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="site-footer">
+    <div class="footer-build mono">
+      <span class="dim">$</span> cmake -B build &amp;&amp; cmake --build build
+      <br />
+      <span class="dim">$</span> ./build/tenet
+    </div>
+    <div class="footer-links">
+      <a href="#" class="footer-repo-link">
+        <github class="com">
+          <unzoo4>/TENASCII
+      </a>
+      <span class="dim">·</span>
+      <span class="dim">built in C11, no dependencies but stb_image</span>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
